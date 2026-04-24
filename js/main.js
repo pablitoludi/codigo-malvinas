@@ -1,4 +1,3 @@
-
 /* =========================================================
    CÓDIGO MALVINAS — Flujo de intro
    Stages: Gate → Typewriter → Film Leader → Main Content
@@ -8,7 +7,7 @@
 
 const BRAND_NAME = 'Codigo Malvinas';
 const KEY_SAMPLE_URL = 'assets/sounds/key-v4.mp3';
-const POOL_SIZE = 8; // cuantos clones del sample tenemos en rotación
+const POOL_SIZE = 3; // cuantos clones del sample tenemos en rotación
 
 const stages = {
   gate:       document.getElementById('stage-gate'),
@@ -30,6 +29,9 @@ let poolIdx        = 0;
 let introStarted   = false;
 let introSkipped   = false;
 let introFinished  = false;
+
+// En mobile el audio causa lag — lo desactivamos
+const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
 
 /* ----------------------------------------------------
    Helpers
@@ -63,7 +65,7 @@ function hideSkipButton() {
    no se corten entre sí (rotación round-robin).
 ---------------------------------------------------- */
 function buildAudioPool() {
-  if (audioPool.length) return;
+  if (audioPool.length || isMobile) return;
   for (let i = 0; i < POOL_SIZE; i++) {
     const a = new Audio(KEY_SAMPLE_URL);
     a.preload = 'auto';
