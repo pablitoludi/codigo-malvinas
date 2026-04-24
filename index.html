@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <title>Codigo Malvinas</title>
+  <meta name="description" content="Testimonios en primera persona de los combatientes de la Guerra de Malvinas. Memoria, historia y voz.">
+
+  <meta property="og:title" content="Codigo Malvinas">
+  <meta property="og:description" content="Testimonios en primera persona de los combatientes de la Guerra de Malvinas.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Si el navegador no tiene JS, saltar directo al contenido principal -->
+  <noscript>
+    <style>
+      #stage-gate, #stage-typewriter, #stage-leader { display: none !important; }
+      #stage-main { opacity: 1 !important; visibility: visible !important; position: static !important; }
+      body { overflow: auto !important; }
+    </style>
+  </noscript>
+</head>
+<body class="intro-playing">
+
+  <!-- Grano sutil de pelicula sobre toda la pantalla -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- ======================================================
+       STAGE 0 — Puerta de entrada (necesaria para audio)
+       ====================================================== -->
+  <section id="stage-gate" class="stage stage-active" aria-label="Tocá la pantalla para comenzar">
+    <button class="gate-content" type="button" aria-label="Comenzar experiencia">
+      <svg class="gate-icon" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="1"/>
+        <polygon points="19,15 19,33 34,24" fill="currentColor"/>
+      </svg>
+      <p class="gate-text">TOCÁ PARA COMENZAR</p>
+    </button>
+  </section>
+
+  <!-- ======================================================
+       STAGE 1 — Máquina de escribir
+       ====================================================== -->
+  <section id="stage-typewriter" class="stage" aria-hidden="true">
+    <div class="typewriter-wrap">
+      <span id="typed"></span><span class="cursor" aria-hidden="true">▮</span>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       STAGE 2 — Film leader / cuenta regresiva de cine
+       ====================================================== -->
+  <section id="stage-leader" class="stage" aria-hidden="true">
+    <video id="leader-video" preload="auto" playsinline webkit-playsinline>
+      <source src="assets/intro-leader-v2.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- ======================================================
+       Botón de saltar intro (visible solo durante la intro)
+       ====================================================== -->
+  <button id="skip-btn" class="skip-btn" type="button" aria-label="Saltar intro" hidden>
+    SALTAR ▶▶
+  </button>
+
+  <!-- ======================================================
+       STAGE 3 — Contenido principal (testimonios)
+       ====================================================== -->
+  <main id="stage-main" class="stage" aria-hidden="true">
+
+    <header class="brand-mini">
+      <h1 class="brand-mini-name">Codigo Malvinas</h1>
+      <p class="coords-mini">51°42'S · 57°51'O</p>
+      <img src="assets/logo-malvinas.png" alt="Silueta de las Islas Malvinas" class="logo-mini" onerror="this.style.display='none'">
+    </header>
+
+    <!-- Contenedor del rollo. Cuando conectemos Supabase, se renderizan acá los testimonios activos. -->
+    <section class="film-strip" id="testimonios-container" aria-label="Testimonios">
+
+      <article class="frame" data-testimonio="1">
+        <div class="frame-tag">[ I ] TESTIMONIO</div>
+        <div class="video-container">
+          <video class="testimonio-video" controls preload="metadata" playsinline webkit-playsinline>
+            <source src="videos/testimonio-1.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+        </div>
+        <div class="frame-info">
+          <h2 class="veteran-name">Nombre por cargar</h2>
+          <p class="veteran-meta">Regimiento · 1982</p>
+          <p class="veteran-bio">Este contenido se va a cargar automáticamente desde el admin una vez que conectemos Supabase. Por ahora es un placeholder para ver el layout.</p>
+        </div>
+      </article>
+
+      <!-- Cuando haya más testimonios publicados, aparecerán debajo automáticamente -->
+
+    </section>
+
+    <footer class="site-footer">
+      <p class="memorial">EN MEMORIA DE LOS COMBATIENTES</p>
+      <p class="copy">© 2026 · Codigo Malvinas</p>
+    </footer>
+
+  </main>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

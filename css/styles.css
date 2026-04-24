@@ -1,0 +1,381 @@
+/* ============================================
+   CÓDIGO MALVINAS — Estilos
+   Mobile-first. Paleta: negro + crema envejecido.
+   Estética: rollo de película / cine de archivo.
+   ============================================ */
+
+:root {
+  --bg: #0a0a0a;
+  --bg-secondary: #141414;
+  --frame-bg: #1e1b17;
+  --paper: #ece6d4;
+  --paper-dim: #9a9384;
+  --paper-dark: #5a5348;
+  --border: #3a362d;
+  --border-soft: #2a2a2a;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--paper);
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mientras corre la intro, bloqueamos el scroll */
+body.intro-playing {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+}
+
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ============================================
+   Grano de película — overlay fijo sobre todo
+   ============================================ */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* ============================================
+   STAGES — pantallas del flujo
+   ============================================ */
+.stage {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+  z-index: 100;
+}
+
+.stage-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* La pantalla principal es un documento normal (scrolleable), no overlay fijo */
+#stage-main {
+  position: static;
+  display: block;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Cuando main está activa, el resto queda oculto */
+body:not(.intro-playing) #stage-gate,
+body:not(.intro-playing) #stage-typewriter,
+body:not(.intro-playing) #stage-leader {
+  display: none;
+}
+
+/* ============================================
+   STAGE 0 — Gate / tocá para comenzar
+   ============================================ */
+.gate-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2rem;
+  min-height: 44px;
+  min-width: 44px;
+  animation: gentlePulse 2.4s ease-in-out infinite;
+}
+
+.gate-icon {
+  width: 72px;
+  height: 72px;
+  color: var(--paper-dim);
+}
+
+.gate-text {
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.4em;
+  color: var(--paper-dim);
+}
+
+@keyframes gentlePulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+/* ============================================
+   STAGE 1 — Typewriter
+   ============================================ */
+.typewriter-wrap {
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+  font-size: clamp(1.6rem, 8vw, 3.2rem);
+  color: var(--paper);
+  letter-spacing: 0.08em;
+  padding: 0 1rem;
+  text-align: center;
+  white-space: nowrap;
+  /* Sombra suave color crema para "resaltar" */
+  filter: drop-shadow(0 0 12px rgba(236, 230, 212, 0.22));
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 0.9s step-start infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ============================================
+   STAGE 2 — Film leader video
+   ============================================ */
+#stage-leader {
+  background: #000;
+}
+
+#leader-video {
+  width: 100%;
+  height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
+  object-fit: contain;
+  display: block;
+}
+
+/* ============================================
+   Botón saltar intro
+   ============================================ */
+.skip-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  background: rgba(10, 10, 10, 0.65);
+  color: var(--paper-dim);
+  border: 0.5px solid var(--border);
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  padding: 0.7rem 1rem;
+  min-height: 44px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skip-btn.visible {
+  opacity: 0.75;
+}
+
+.skip-btn:hover,
+.skip-btn:active {
+  opacity: 1;
+  color: var(--paper);
+}
+
+/* ============================================
+   STAGE 3 — Main content
+   ============================================ */
+.brand-mini {
+  text-align: center;
+  padding: 2rem 1rem 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.brand-mini-name {
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--paper);
+  margin-bottom: 0.7rem;
+}
+
+.coords-mini {
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  color: var(--paper-dim);
+  margin-bottom: 1.2rem;
+}
+
+.logo-mini {
+  max-width: 140px;
+  width: 55%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter:
+    drop-shadow(0 0 14px rgba(236, 230, 212, 0.18))
+    drop-shadow(0 0 3px rgba(236, 230, 212, 0.2));
+}
+
+/* ============================================
+   Rollo de película — contenedor de testimonios
+   ============================================ */
+.film-strip {
+  max-width: 520px;
+  margin: 1.5rem auto 2rem;
+  background: var(--bg-secondary);
+  border: 0.5px solid var(--border-soft);
+  position: relative;
+  padding: 0 42px;
+}
+
+/* Perforaciones sprocket a ambos costados */
+.film-strip::before,
+.film-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 42px;
+  background-color: var(--bg-secondary);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='42' height='28'><rect x='7' y='7' width='28' height='14' rx='2' fill='%230a0a0a'/></svg>");
+  background-repeat: repeat-y;
+  background-position: center top;
+  pointer-events: none;
+}
+
+.film-strip::before { left: 0; }
+.film-strip::after  { right: 0; }
+
+.frame {
+  padding: 1.5rem 0;
+}
+
+.frame + .frame {
+  border-top: 0.5px solid var(--border);
+}
+
+.frame-tag {
+  text-align: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.72rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.35em;
+  margin-bottom: 1rem;
+}
+
+.video-container {
+  aspect-ratio: 16 / 9;
+  background: var(--frame-bg);
+  border: 0.5px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.frame-info {
+  text-align: center;
+  padding: 0 0.3rem;
+}
+
+.veteran-name {
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--paper);
+  margin-bottom: 0.3rem;
+}
+
+.veteran-meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--paper-dim);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.veteran-bio {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--paper-dim);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer {
+  text-align: center;
+  padding: 2.5rem 1rem 2.5rem;
+}
+
+.memorial {
+  font-family: 'Special Elite', 'Courier Prime', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.4em;
+  color: var(--paper-dim);
+  margin-bottom: 0.6rem;
+}
+
+.copy {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--paper-dark);
+}
+
+/* ============================================
+   Responsive — tablet y desktop
+   ============================================ */
+@media (min-width: 600px) {
+  .film-strip { max-width: 560px; }
+  .logo-mini { max-width: 160px; }
+  .brand-mini-name { font-size: 1.55rem; }
+}
+
+@media (min-width: 900px) {
+  .brand-mini { padding: 3rem 1rem 2rem; }
+  .film-strip { max-width: 620px; }
+  .veteran-bio { font-size: 0.9rem; }
+}
+
+/* Accesibilidad — si el usuario prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .gate-content { animation: none; }
+  .cursor { animation: none; opacity: 1; }
+  .stage { transition: none; }
+}
