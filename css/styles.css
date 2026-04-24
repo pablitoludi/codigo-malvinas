@@ -218,7 +218,7 @@ body:not(.intro-playing) #stage-leader {
 
 .brand-mini-name {
   font-family: 'Special Elite', 'Courier Prime', monospace;
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 400;
   letter-spacing: 0.12em;
   color: var(--paper);
@@ -244,34 +244,16 @@ body:not(.intro-playing) #stage-leader {
 }
 
 /* ============================================
-   Rollo de película — contenedor de testimonios
+   Contenedor de testimonios
    ============================================ */
 .film-strip {
-  max-width: 520px;
+  max-width: 680px;
   margin: 1.5rem auto 2rem;
   background: var(--bg-secondary);
   border: 0.5px solid var(--border-soft);
   position: relative;
-  padding: 0 42px;
+  padding: 0 1.5rem;
 }
-
-/* Perforaciones sprocket a ambos costados */
-.film-strip::before,
-.film-strip::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 42px;
-  background-color: var(--bg-secondary);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='42' height='28'><rect x='7' y='7' width='28' height='14' rx='2' fill='%230a0a0a'/></svg>");
-  background-repeat: repeat-y;
-  background-position: center top;
-  pointer-events: none;
-}
-
-.film-strip::before { left: 0; }
-.film-strip::after  { right: 0; }
 
 .frame {
   padding: 1.5rem 0;
@@ -313,7 +295,7 @@ body:not(.intro-playing) #stage-leader {
 
 .veteran-name {
   font-family: 'Special Elite', 'Courier Prime', monospace;
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.05em;
   color: var(--paper);
@@ -329,10 +311,10 @@ body:not(.intro-playing) #stage-leader {
 }
 
 .veteran-bio {
-  font-size: 0.85rem;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--paper-dim);
-  max-width: 380px;
+  max-width: 480px;
   margin: 0 auto;
 }
 
