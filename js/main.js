@@ -30,7 +30,6 @@ let introStarted   = false;
 let introSkipped   = false;
 let introFinished  = false;
 
-// En mobile el audio causa lag — lo desactivamos
 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
 
 /* ----------------------------------------------------
@@ -65,8 +64,9 @@ function hideSkipButton() {
    no se corten entre sí (rotación round-robin).
 ---------------------------------------------------- */
 function buildAudioPool() {
-  if (audioPool.length || isMobile) return;
-  for (let i = 0; i < POOL_SIZE; i++) {
+  if (audioPool.length) return;
+  const size = isMobile ? 2 : POOL_SIZE;
+  for (let i = 0; i < size; i++) {
     const a = new Audio(KEY_SAMPLE_URL);
     a.preload = 'auto';
     a.volume = 0.9;
@@ -146,14 +146,18 @@ async function typewriterAnimation(text, target) {
     const char = text[i];
     target.textContent += char;
 
-    if (char === ' ') {
-      playSpaceClick();
-    } else {
-      playKeyClick();
+    // En mobile reproducimos sonido cada 2 letras para no saturar
+    const shouldPlay = !isMobile || i % 2 === 0;
+    if (shouldPlay) {
+      if (char === ' ') {
+        playSpaceClick();
+      } else {
+        playKeyClick();
+      }
     }
 
-    const baseDelay = 70;
-    const variance  = Math.random() * 40;
+    const baseDelay = isMobile ? 100 : 70;
+    const variance  = Math.random() * (isMobile ? 30 : 40);
     await wait(baseDelay + variance);
   }
 }
