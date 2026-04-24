@@ -1,3 +1,4 @@
+
 /* =========================================================
    CÓDIGO MALVINAS — Flujo de intro
    Stages: Gate → Typewriter → Film Leader → Main Content
@@ -149,8 +150,8 @@ async function typewriterAnimation(text, target) {
       playKeyClick();
     }
 
-    const baseDelay = 145;
-    const variance  = Math.random() * 130;
+    const baseDelay = 70;
+    const variance  = Math.random() * 40;
     await wait(baseDelay + variance);
   }
 }
